@@ -11,6 +11,7 @@ using NotesService.Application.Commands.ArchiveNote;
 using NotesService.Application.Commands.UnarchiveNote;
 using NotesService.Application.Commands.PinNote;
 using NotesService.Application.Commands.UnpinNote;
+using NotesService.Application.Commands.ChangeColor;
 
 namespace NotesService.API.Controllers;
 
@@ -158,6 +159,22 @@ public class NotesController : ControllerBase
         return Ok(new
         {
             message = "Note unpinned successfully"
+        });
+    }
+    [HttpPatch("{id}/color")]
+    public async Task<IActionResult> ChangeColor(
+    int id,
+    ChangeColorDto dto)
+    {
+        var result = await _mediator.Send(
+            new ChangeColorCommand(id, dto));
+
+        if (!result)
+            return NotFound();
+
+        return Ok(new
+        {
+            message = "Color updated successfully"
         });
     }
 }
