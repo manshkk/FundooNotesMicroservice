@@ -23,6 +23,25 @@ public class NoteRepository : INoteRepository
     }
     public async Task<List<Note>> GetAllAsync()
     {
-        return await _context.Notes.ToListAsync();
+        return await _context.Notes
+            .Where(n => !n.IsDeleted)
+            .ToListAsync();
+    }
+    public async Task<Note?> GetByIdAsync(int id)
+    {
+        return await _context.Notes
+            .FirstOrDefaultAsync(n => n.Id == id);
+    }
+
+    public async Task UpdateAsync(Note note)
+    {
+        _context.Notes.Update(note);
+        await _context.SaveChangesAsync();
+    }
+    public async Task<List<Note>> GetTrashNotesAsync()
+    {
+        return await _context.Notes
+            .Where(n => n.IsDeleted)
+            .ToListAsync();
     }
 }
