@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NotesService.Application.Commands.CreateNote;
 using NotesService.Application.DTOs;
 using NotesService.Application.Queries.GetAllNotes;
+using NotesService.Application.Commands.UpdateNote;
 
 namespace NotesService.API.Controllers;
 
@@ -34,5 +35,23 @@ public class NotesController : ControllerBase
         var notes = await _mediator.Send(new GetAllNotesQuery());
 
         return Ok(notes);
+    }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateNote(
+    int id,
+    UpdateNoteDto dto)
+    {
+        var result = await _mediator.Send(
+            new UpdateNoteCommand(id, dto));
+
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return Ok(new
+        {
+            message = "Note updated successfully"
+        });
     }
 }

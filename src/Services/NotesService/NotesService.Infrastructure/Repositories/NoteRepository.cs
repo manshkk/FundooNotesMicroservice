@@ -25,4 +25,15 @@ public class NoteRepository : INoteRepository
     {
         return await _context.Notes.ToListAsync();
     }
+    public async Task<Note?> GetByIdAsync(int id)
+    {
+        return await _context.Notes
+            .FirstOrDefaultAsync(n => n.Id == id);
+    }
+
+    public async Task UpdateAsync(Note note)
+    {
+        _context.Notes.Update(note);
+        await _context.SaveChangesAsync();
+    }
 }
