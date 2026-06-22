@@ -4,6 +4,7 @@ using NotesService.Application.Commands.CreateNote;
 using NotesService.Application.DTOs;
 using NotesService.Application.Queries.GetAllNotes;
 using NotesService.Application.Commands.UpdateNote;
+using NotesService.Application.Commands.TrashNote;
 
 namespace NotesService.API.Controllers;
 
@@ -52,6 +53,22 @@ public class NotesController : ControllerBase
         return Ok(new
         {
             message = "Note updated successfully"
+        });
+    }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> TrashNote(int id)
+    {
+        var result = await _mediator.Send(
+            new TrashNoteCommand(id));
+
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return Ok(new
+        {
+            message = "Note moved to trash successfully"
         });
     }
 }
