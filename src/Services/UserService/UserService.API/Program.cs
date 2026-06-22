@@ -1,9 +1,8 @@
-using MediatR;
+using SharedLibrary.Exceptions.GlobalHandlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using UserService.API.Middleware;
 using UserService.Application.Commands.RegisterUser;
 using UserService.Application.Interfaces;
 using UserService.Infrastructure.Authentication;
@@ -77,7 +76,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<GlobalExceptionHandler>();
 
 if (app.Environment.IsDevelopment())
 {

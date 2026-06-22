@@ -10,4 +10,7 @@
   <Folder Name="/src/ApiGateway/">
     <Project Path="src/ApiGateway/OcelotGateway/OcelotGateway.csproj" />
   </Folder>
+  <Folder Name="/src/SharedLibrary/">
+    <Project Path="src/SharedLibrary/SharedLibrary.Exceptions/SharedLibrary.Exceptions.csproj" />
+  </Folder>
 </Solution>
