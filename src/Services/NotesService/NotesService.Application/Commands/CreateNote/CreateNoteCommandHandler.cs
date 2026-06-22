@@ -21,7 +21,6 @@ public class CreateNoteCommandHandler : IRequestHandler<CreateNoteCommand, int>
         {
             Title = request.Dto.Title,
             Content = request.Dto.Content,
-            Color = request.Dto.Color,
             UserId = request.UserId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
