@@ -12,6 +12,7 @@ using NotesService.Application.Commands.UnarchiveNote;
 using NotesService.Application.Commands.PinNote;
 using NotesService.Application.Commands.UnpinNote;
 using NotesService.Application.Commands.ChangeColor;
+using NotesService.Application.Queries.GetNoteById;
 
 namespace NotesService.API.Controllers;
 
@@ -176,5 +177,16 @@ public class NotesController : ControllerBase
         {
             message = "Color updated successfully"
         });
+    }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetNoteById(int id)
+    {
+        var note = await _mediator.Send(
+            new GetNoteByIdQuery(id));
+
+        if (note == null)
+            return NotFound();
+
+        return Ok(note);
     }
 }
