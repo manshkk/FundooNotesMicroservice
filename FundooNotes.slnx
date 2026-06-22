@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/UserService/">
+    <Project Path="src/Services/UserService/UserService.API/UserService.API.csproj" />
+    <Project Path="src/Services/UserService/UserService.Application/UserService.Application.csproj" />
+    <Project Path="src/Services/UserService/UserService.Domain/UserService.Domain.csproj" />
+    <Project Path="src/Services/UserService/UserService.Infrastructure/UserService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/ApiGateway/">
+    <Project Path="src/ApiGateway/OcelotGateway/OcelotGateway.csproj" />
+  </Folder>
+</Solution>
