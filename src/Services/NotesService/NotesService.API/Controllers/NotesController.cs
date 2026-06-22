@@ -7,6 +7,8 @@ using NotesService.Application.Commands.UpdateNote;
 using NotesService.Application.Commands.TrashNote;
 using NotesService.Application.Commands.RestoreNote;
 using NotesService.Application.Queries.GetTrashNotes;
+using NotesService.Application.Commands.ArchiveNote;
+using NotesService.Application.Commands.UnarchiveNote;
 
 namespace NotesService.API.Controllers;
 
@@ -96,6 +98,35 @@ public class NotesController : ControllerBase
         return Ok(new
         {
             message = "Note restored successfully"
+        });
+    }
+    [HttpPatch("{id}/archive")]
+    public async Task<IActionResult> ArchiveNote(int id)
+    {
+        var result = await _mediator.Send(
+            new ArchiveNoteCommand(id));
+
+        if (!result)
+            return NotFound();
+
+        return Ok(new
+        {
+            message = "Note archived successfully"
+        });
+    }
+
+    [HttpPatch("{id}/unarchive")]
+    public async Task<IActionResult> UnarchiveNote(int id)
+    {
+        var result = await _mediator.Send(
+            new UnarchiveNoteCommand(id));
+
+        if (!result)
+            return NotFound();
+
+        return Ok(new
+        {
+            message = "Note unarchived successfully"
         });
     }
 }
