@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NotesService.Application.Commands.CreateNote;
 using NotesService.Application.DTOs;
+using NotesService.Application.Queries.GetAllNotes;
 
 namespace NotesService.API.Controllers;
 
@@ -26,5 +27,12 @@ public class NotesController : ControllerBase
             nameof(CreateNote),
             new { id = noteId },
             new { noteId });
+    }
+    [HttpGet]
+    public async Task<IActionResult> GetAllNotes()
+    {
+        var notes = await _mediator.Send(new GetAllNotesQuery());
+
+        return Ok(notes);
     }
 }

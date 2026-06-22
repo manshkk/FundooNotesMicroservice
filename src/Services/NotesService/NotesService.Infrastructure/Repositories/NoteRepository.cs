@@ -21,4 +21,8 @@ public class NoteRepository : INoteRepository
 
         return note.Id;
     }
+    public async Task<List<Note>> GetAllAsync()
+    {
+        return await _context.Notes.ToListAsync();
+    }
 }
