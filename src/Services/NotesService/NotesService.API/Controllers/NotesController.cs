@@ -9,6 +9,8 @@ using NotesService.Application.Commands.RestoreNote;
 using NotesService.Application.Queries.GetTrashNotes;
 using NotesService.Application.Commands.ArchiveNote;
 using NotesService.Application.Commands.UnarchiveNote;
+using NotesService.Application.Commands.PinNote;
+using NotesService.Application.Commands.UnpinNote;
 
 namespace NotesService.API.Controllers;
 
@@ -127,6 +129,35 @@ public class NotesController : ControllerBase
         return Ok(new
         {
             message = "Note unarchived successfully"
+        });
+    }
+    [HttpPatch("{id}/pin")]
+    public async Task<IActionResult> PinNote(int id)
+    {
+        var result = await _mediator.Send(
+            new PinNoteCommand(id));
+
+        if (!result)
+            return NotFound();
+
+        return Ok(new
+        {
+            message = "Note pinned successfully"
+        });
+    }
+
+    [HttpPatch("{id}/unpin")]
+    public async Task<IActionResult> UnpinNote(int id)
+    {
+        var result = await _mediator.Send(
+            new UnpinNoteCommand(id));
+
+        if (!result)
+            return NotFound();
+
+        return Ok(new
+        {
+            message = "Note unpinned successfully"
         });
     }
 }
