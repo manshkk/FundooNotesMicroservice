@@ -21,10 +21,11 @@ public class NoteRepository : INoteRepository
 
         return note.Id;
     }
-    public async Task<List<Note>> GetAllAsync()
+    public async Task<List<Note>> GetAllByUserIdAsync(int userId)
     {
         return await _context.Notes
-            .Where(n => !n.IsDeleted)
+            .Where(n => n.UserId == userId &&
+                        !n.IsDeleted)
             .ToListAsync();
     }
     public async Task<Note?> GetByIdAsync(int id)

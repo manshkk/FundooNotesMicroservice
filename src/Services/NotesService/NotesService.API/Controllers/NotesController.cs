@@ -13,11 +13,14 @@ using NotesService.Application.Commands.PinNote;
 using NotesService.Application.Commands.UnpinNote;
 using NotesService.Application.Commands.ChangeColor;
 using NotesService.Application.Queries.GetNoteById;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace NotesService.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class NotesController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -30,8 +33,11 @@ public class NotesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateNote(CreateNoteDto dto)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var noteId = await _mediator.Send(
-            new CreateNoteCommand(dto, 1));
+            new CreateNoteCommand(dto, userId));
 
         return CreatedAtAction(
             nameof(CreateNote),
@@ -41,10 +47,15 @@ public class NotesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllNotes()
     {
-        var notes = await _mediator.Send(new GetAllNotesQuery());
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
+        var notes = await _mediator.Send(
+            new GetAllNotesQuery(userId));
 
         return Ok(notes);
     }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateNote(
     int id,

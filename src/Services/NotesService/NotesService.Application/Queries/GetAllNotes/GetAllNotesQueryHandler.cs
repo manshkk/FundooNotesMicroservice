@@ -18,7 +18,8 @@ public class GetAllNotesQueryHandler
         GetAllNotesQuery request,
         CancellationToken cancellationToken)
     {
-        var notes = await _noteRepository.GetAllAsync();
+        var notes = await _noteRepository
+    .GetAllByUserIdAsync(request.UserId);
 
         return notes.Select(note => new NoteResponseDto
         {
