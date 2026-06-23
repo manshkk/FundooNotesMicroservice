@@ -22,6 +22,11 @@ public class ArchiveNoteCommandHandler
         if (note == null)
             return false;
 
+        if (note.UserId != request.UserId)
+        {
+            return false;
+        }
+
         note.IsArchived = true;
         note.UpdatedAt = DateTime.UtcNow;
 

@@ -23,7 +23,10 @@ public class UpdateNoteCommandHandler
         {
             return false;
         }
-
+        if (note.UserId != request.UserId)
+        {
+            return false;
+        }
         note.Title = request.Dto.Title;
         note.Content = request.Dto.Content;
         note.UpdatedAt = DateTime.UtcNow;

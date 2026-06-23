@@ -21,10 +21,11 @@ public class NoteRepository : INoteRepository
 
         return note.Id;
     }
-    public async Task<List<Note>> GetAllAsync()
+    public async Task<List<Note>> GetAllByUserIdAsync(int userId)
     {
         return await _context.Notes
-            .Where(n => !n.IsDeleted)
+            .Where(n => n.UserId == userId &&
+                        !n.IsDeleted)
             .ToListAsync();
     }
     public async Task<Note?> GetByIdAsync(int id)
@@ -38,10 +39,11 @@ public class NoteRepository : INoteRepository
         _context.Notes.Update(note);
         await _context.SaveChangesAsync();
     }
-    public async Task<List<Note>> GetTrashNotesAsync()
+    public async Task<List<Note>> GetTrashNotesByUserIdAsync(int userId)
     {
         return await _context.Notes
-            .Where(n => n.IsDeleted)
+            .Where(n => n.UserId == userId &&
+                        n.IsDeleted)
             .ToListAsync();
     }
 }

@@ -3,5 +3,5 @@ using NotesService.Application.DTOs;
 
 namespace NotesService.Application.Queries.GetAllNotes;
 
-public record GetAllNotesQuery()
+public record GetAllNotesQuery(int UserId)
     : IRequest<List<NoteResponseDto>>;

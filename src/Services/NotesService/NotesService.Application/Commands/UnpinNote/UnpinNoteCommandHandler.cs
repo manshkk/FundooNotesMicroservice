@@ -22,6 +22,11 @@ public class UnpinNoteCommandHandler
         if (note == null)
             return false;
 
+        if (note.UserId != request.UserId)
+        {
+            return false;
+        }
+
         note.IsPinned = false;
         note.UpdatedAt = DateTime.UtcNow;
 
