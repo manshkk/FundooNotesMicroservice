@@ -5,4 +5,6 @@ namespace NotesService.Application.Commands.UpdateNote;
 
 public record UpdateNoteCommand(
     int Id,
-    UpdateNoteDto Dto) : IRequest<bool>;
+    UpdateNoteDto Dto,
+    int UserId)
+    : IRequest<bool>;

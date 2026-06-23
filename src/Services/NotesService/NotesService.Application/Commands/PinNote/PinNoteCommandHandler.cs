@@ -22,6 +22,11 @@ public class PinNoteCommandHandler
         if (note == null)
             return false;
 
+        if (note.UserId != request.UserId)
+        {
+            return false;
+        }
+
         note.IsPinned = true;
         note.UpdatedAt = DateTime.UtcNow;
 

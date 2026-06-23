@@ -12,5 +12,5 @@ public interface INoteRepository
 
     Task UpdateAsync(Note note);
 
-    Task<List<Note>> GetTrashNotesAsync();
+    Task<List<Note>> GetTrashNotesByUserIdAsync(int userId);
 }

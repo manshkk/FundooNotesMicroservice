@@ -22,6 +22,11 @@ public class ChangeColorCommandHandler
         if (note == null)
             return false;
 
+        if (note.UserId != request.UserId)
+        {
+            return false;
+        }
+
         note.Color = request.Dto.Color;
         note.UpdatedAt = DateTime.UtcNow;
 

@@ -2,4 +2,7 @@
 
 namespace NotesService.Application.Commands.UnpinNote;
 
-public record UnpinNoteCommand(int Id) : IRequest<bool>;
+public record UnpinNoteCommand(
+    int Id,
+    int UserId)
+    : IRequest<bool>;

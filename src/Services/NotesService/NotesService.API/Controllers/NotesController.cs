@@ -61,8 +61,11 @@ public class NotesController : ControllerBase
     int id,
     UpdateNoteDto dto)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new UpdateNoteCommand(id, dto));
+            new UpdateNoteCommand(id, dto, userId));
 
         if (!result)
         {
@@ -77,8 +80,11 @@ public class NotesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> TrashNote(int id)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new TrashNoteCommand(id));
+            new TrashNoteCommand(id, userId));
 
         if (!result)
         {
@@ -90,11 +96,15 @@ public class NotesController : ControllerBase
             message = "Note moved to trash successfully"
         });
     }
+
     [HttpGet("trash")]
     public async Task<IActionResult> GetTrashNotes()
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var notes = await _mediator.Send(
-            new GetTrashNotesQuery());
+            new GetTrashNotesQuery(userId));
 
         return Ok(notes);
     }
@@ -102,8 +112,11 @@ public class NotesController : ControllerBase
     [HttpPatch("{id}/restore")]
     public async Task<IActionResult> RestoreNote(int id)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new RestoreNoteCommand(id));
+            new RestoreNoteCommand(id, userId));
 
         if (!result)
         {
@@ -115,11 +128,15 @@ public class NotesController : ControllerBase
             message = "Note restored successfully"
         });
     }
+
     [HttpPatch("{id}/archive")]
     public async Task<IActionResult> ArchiveNote(int id)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new ArchiveNoteCommand(id));
+            new ArchiveNoteCommand(id, userId));
 
         if (!result)
             return NotFound();
@@ -133,8 +150,11 @@ public class NotesController : ControllerBase
     [HttpPatch("{id}/unarchive")]
     public async Task<IActionResult> UnarchiveNote(int id)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new UnarchiveNoteCommand(id));
+            new UnarchiveNoteCommand(id, userId));
 
         if (!result)
             return NotFound();
@@ -144,11 +164,15 @@ public class NotesController : ControllerBase
             message = "Note unarchived successfully"
         });
     }
+
     [HttpPatch("{id}/pin")]
     public async Task<IActionResult> PinNote(int id)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new PinNoteCommand(id));
+            new PinNoteCommand(id, userId));
 
         if (!result)
             return NotFound();
@@ -162,8 +186,11 @@ public class NotesController : ControllerBase
     [HttpPatch("{id}/unpin")]
     public async Task<IActionResult> UnpinNote(int id)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new UnpinNoteCommand(id));
+            new UnpinNoteCommand(id, userId));
 
         if (!result)
             return NotFound();
@@ -173,13 +200,17 @@ public class NotesController : ControllerBase
             message = "Note unpinned successfully"
         });
     }
+
     [HttpPatch("{id}/color")]
     public async Task<IActionResult> ChangeColor(
-    int id,
-    ChangeColorDto dto)
+     int id,
+     ChangeColorDto dto)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var result = await _mediator.Send(
-            new ChangeColorCommand(id, dto));
+            new ChangeColorCommand(id, dto, userId));
 
         if (!result)
             return NotFound();
@@ -192,8 +223,11 @@ public class NotesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetNoteById(int id)
     {
+        var userId = int.Parse(
+            User.FindFirst("UserId")!.Value);
+
         var note = await _mediator.Send(
-            new GetNoteByIdQuery(id));
+            new GetNoteByIdQuery(id, userId));
 
         if (note == null)
             return NotFound();

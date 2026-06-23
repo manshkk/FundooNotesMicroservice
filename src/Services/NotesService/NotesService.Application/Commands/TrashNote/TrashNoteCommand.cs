@@ -2,4 +2,7 @@
 
 namespace NotesService.Application.Commands.TrashNote;
 
-public record TrashNoteCommand(int Id) : IRequest<bool>;
+public record TrashNoteCommand(
+    int Id,
+    int UserId)
+    : IRequest<bool>;

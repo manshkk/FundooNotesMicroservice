@@ -24,6 +24,11 @@ public class RestoreNoteCommandHandler
             return false;
         }
 
+        if (note.UserId != request.UserId)
+        {
+            return false;
+        }
+
         note.IsDeleted = false;
         note.UpdatedAt = DateTime.UtcNow;
 

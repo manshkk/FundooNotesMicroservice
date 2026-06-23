@@ -18,7 +18,8 @@ public class GetTrashNotesQueryHandler
         GetTrashNotesQuery request,
         CancellationToken cancellationToken)
     {
-        var notes = await _noteRepository.GetTrashNotesAsync();
+        var notes = await _noteRepository
+    .GetTrashNotesByUserIdAsync(request.UserId);
 
         return notes.Select(note => new NoteResponseDto
         {

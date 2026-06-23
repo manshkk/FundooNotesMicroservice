@@ -23,6 +23,9 @@ public class GetNoteByIdQueryHandler
         if (note == null)
             return null;
 
+        if (note.UserId != request.UserId)
+            return null;
+
         return new NoteResponseDto
         {
             Id = note.Id,
