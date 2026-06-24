@@ -7,6 +7,7 @@ using SharedLibrary.Exceptions.GlobalHandlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SharedLibrary.Caching.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,8 @@ builder.Services.AddDbContext<FundooDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
+
+builder.Services.AddRedisCaching(builder.Configuration);
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreateNoteCommandHandler).Assembly));

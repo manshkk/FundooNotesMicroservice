@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedLibrary\SharedLibrary.Caching\SharedLibrary.Caching.csproj" />
     <ProjectReference Include="..\NotesService.Infrastructure\NotesService.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\SharedLibrary\SharedLibrary.Exceptions\SharedLibrary.Exceptions.csproj" />
     <ProjectReference Include="..\NotesService.Application\NotesService.Application.csproj" />
