@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace CollaborationService.Application.Commands.AddCollaborator
+namespace CollaborationService.Application.Commands.AddCollaborator;
+
+public class AddCollaboratorCommandHandler
+    : IRequestHandler<AddCollaboratorCommand, bool>
 {
-    internal class AddCollaboratorCommandHandler
+    public Task<bool> Handle(
+        AddCollaboratorCommand request,
+        CancellationToken cancellationToken)
     {
+        throw new NotImplementedException();
     }
 }
