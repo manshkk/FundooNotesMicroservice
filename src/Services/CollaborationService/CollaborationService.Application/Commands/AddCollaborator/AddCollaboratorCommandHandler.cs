@@ -9,12 +9,15 @@ public class AddCollaboratorCommandHandler
 {
     private readonly IUserServiceClient _userServiceClient;
     private readonly ICollaboratorRepository _collaboratorRepository;
+    private readonly INotesServiceClient _notesServiceClient;
 
     public AddCollaboratorCommandHandler(
-        IUserServiceClient userServiceClient,
-        ICollaboratorRepository collaboratorRepository)
+    IUserServiceClient userServiceClient,
+    INotesServiceClient notesServiceClient,
+    ICollaboratorRepository collaboratorRepository)
     {
         _userServiceClient = userServiceClient;
+        _notesServiceClient = notesServiceClient;
         _collaboratorRepository = collaboratorRepository;
     }
 
@@ -30,7 +33,21 @@ public class AddCollaboratorCommandHandler
         {
             return false;
         }
+        var note =
+    await _notesServiceClient
+        .GetNoteByIdAsync(
+            request.Request.NoteId,
+            request.Token);
 
+        if (note == null)
+        {
+            return false;
+        }
+
+        if (note.UserId != request.OwnerUserId)
+        {
+            return false;
+        }
         var collaborator = new Collaborator
         {
             NoteId = request.Request.NoteId,

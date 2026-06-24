@@ -60,6 +60,14 @@ builder.Services.AddHttpClient<
             new Uri("http://localhost:5286/");
     });
 
+builder.Services.AddHttpClient<
+    INotesServiceClient,
+    NotesServiceClient>(client =>
+    {
+        client.BaseAddress =
+            new Uri("http://localhost:5157/");
+    });
+
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(

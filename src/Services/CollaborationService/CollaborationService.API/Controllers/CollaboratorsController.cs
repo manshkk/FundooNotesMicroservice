@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using CollaborationService.Application.Commands.RemoveCollaborator;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CollaborationService.API.Controllers;
 
@@ -32,18 +33,22 @@ public class CollaboratorsController : ControllerBase
             return Unauthorized();
         }
 
-        var ownerUserId =
-            int.Parse(userIdClaim);
+        var token =
+            Request.Headers["Authorization"]
+            .ToString()
+            .Replace("Bearer ", "");
 
-        var result = await _mediator.Send(
-            new AddCollaboratorCommand(
-                dto,
-                ownerUserId));
+        var result =
+            await _mediator.Send(
+                new AddCollaboratorCommand(
+                    dto,
+                    int.Parse(userIdClaim),
+                    token));
 
         if (!result)
         {
             return BadRequest(
-                "Collaborator not found.");
+                "Invalid note or collaborator.");
         }
 
         return Ok(

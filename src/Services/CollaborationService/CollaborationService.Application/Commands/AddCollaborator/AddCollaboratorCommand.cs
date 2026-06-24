@@ -5,5 +5,6 @@ namespace CollaborationService.Application.Commands.AddCollaborator;
 
 public record AddCollaboratorCommand(
     AddCollaboratorRequestDto Request,
-    int OwnerUserId
+    int OwnerUserId,
+    string Token
 ) : IRequest<bool>;
