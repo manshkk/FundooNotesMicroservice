@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CollaborationService.Application.DTOs;
+using MediatR;
 
-namespace CollaborationService.Application.Commands.AddCollaborator
-{
-    internal class AddCollaboratorCommand
-    {
-    }
-}
+namespace CollaborationService.Application.Commands.AddCollaborator;
+
+public record AddCollaboratorCommand(
+    AddCollaboratorRequestDto Request
+) : IRequest<bool>;
