@@ -33,11 +33,10 @@ public class CollaboratorRepository : ICollaboratorRepository
             .FirstOrDefaultAsync(x => x.CollaboratorId == collaboratorId);
 
         if (collaborator == null)
-        {
             return false;
-        }
 
         _context.Collaborators.Remove(collaborator);
+
         await _context.SaveChangesAsync();
 
         return true;
