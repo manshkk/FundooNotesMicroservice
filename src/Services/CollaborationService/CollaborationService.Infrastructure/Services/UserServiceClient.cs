@@ -16,7 +16,7 @@ public class UserServiceClient : IUserServiceClient
     public async Task<UserDto?> GetUserByEmailAsync(string email)
     {
         var response = await _httpClient.GetAsync(
-            $"api/User/email/{email}");
+    $"api/users/email/{email}");
 
         if (!response.IsSuccessStatusCode)
         {

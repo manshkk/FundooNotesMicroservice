@@ -2,7 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Commands.RegisterUser;
 using UserService.Application.DTOs;
+using UserService.Application.Queries.GetUserByEmail;
 using UserService.Application.Queries.LoginUser;
+using UserService.Application.Queries.GetUserByEmail;
 
 namespace UserService.API.Controllers;
 
@@ -33,5 +35,18 @@ public class UsersController : ControllerBase
     {
         var result = await _mediator.Send(new LoginUserQuery(dto));
         return Ok(result);
+    }
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetUserByEmail(string email)
+    {
+        var user = await _mediator.Send(
+            new GetUserByEmailQuery(email));
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(user);
     }
 }
