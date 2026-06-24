@@ -4,5 +4,6 @@ using MediatR;
 namespace CollaborationService.Application.Commands.AddCollaborator;
 
 public record AddCollaboratorCommand(
-    AddCollaboratorRequestDto Request
+    AddCollaboratorRequestDto Request,
+    int OwnerUserId
 ) : IRequest<bool>;

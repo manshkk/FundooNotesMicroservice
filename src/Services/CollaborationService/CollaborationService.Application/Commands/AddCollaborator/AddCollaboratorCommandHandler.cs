@@ -34,7 +34,7 @@ public class AddCollaboratorCommandHandler
         var collaborator = new Collaborator
         {
             NoteId = request.Request.NoteId,
-            OwnerUserId = request.Request.OwnerUserId,
+            OwnerUserId = request.OwnerUserId,
             CollaboratorUserId = user.UserId,
             CollaboratorEmail = user.Email,
             CreatedAt = DateTime.UtcNow

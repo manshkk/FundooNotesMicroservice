@@ -4,11 +4,13 @@ using CollaborationService.Application.Queries.GetCollaborators;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using CollaborationService.Application.Commands.RemoveCollaborator;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CollaborationService.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class CollaboratorsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -20,17 +22,32 @@ public class CollaboratorsController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> AddCollaborator(
-        AddCollaboratorRequestDto dto)
+    AddCollaboratorRequestDto dto)
     {
+        var userIdClaim =
+            User.FindFirst("UserId")?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim))
+        {
+            return Unauthorized();
+        }
+
+        var ownerUserId =
+            int.Parse(userIdClaim);
+
         var result = await _mediator.Send(
-            new AddCollaboratorCommand(dto));
+            new AddCollaboratorCommand(
+                dto,
+                ownerUserId));
 
         if (!result)
         {
-            return BadRequest("Collaborator not found.");
+            return BadRequest(
+                "Collaborator not found.");
         }
 
-        return Ok("Collaborator added successfully.");
+        return Ok(
+            "Collaborator added successfully.");
     }
 
     [HttpGet("{noteId}")]
