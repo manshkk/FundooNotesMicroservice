@@ -1,3 +1,5 @@
+using MediatR;
+using CollaborationService.Application.Commands.AddCollaborator;
 using CollaborationService.Application.Interfaces;
 using CollaborationService.Infrastructure.Context;
 using CollaborationService.Infrastructure.Repositories;
@@ -21,6 +23,12 @@ builder.Services.AddHttpClient<
         client.BaseAddress =
             new Uri("https://localhost:5001/");
     });
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(
+        typeof(AddCollaboratorCommand).Assembly);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

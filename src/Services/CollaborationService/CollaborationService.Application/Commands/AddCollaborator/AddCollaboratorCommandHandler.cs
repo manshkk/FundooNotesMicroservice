@@ -19,9 +19,30 @@ public class AddCollaboratorCommandHandler
     }
 
     public async Task<bool> Handle(
-        AddCollaboratorCommand request,
-        CancellationToken cancellationToken)
+    AddCollaboratorCommand request,
+    CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var user = await _userServiceClient
+            .GetUserByEmailAsync(
+                request.Request.CollaboratorEmail);
+
+        if (user == null)
+        {
+            return false;
+        }
+
+        var collaborator = new Collaborator
+        {
+            NoteId = request.Request.NoteId,
+            OwnerUserId = request.Request.OwnerUserId,
+            CollaboratorUserId = user.UserId,
+            CollaboratorEmail = user.Email,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        await _collaboratorRepository
+            .AddCollaboratorAsync(collaborator);
+
+        return true;
     }
 }

@@ -4,7 +4,7 @@ using UserService.Application.Commands.RegisterUser;
 using UserService.Application.DTOs;
 using UserService.Application.Queries.GetUserByEmail;
 using UserService.Application.Queries.LoginUser;
-using UserService.Application.Queries.GetUserByEmail;
+
 
 namespace UserService.API.Controllers;
 
