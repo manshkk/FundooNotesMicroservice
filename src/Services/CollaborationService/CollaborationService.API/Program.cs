@@ -21,7 +21,7 @@ builder.Services.AddHttpClient<
     UserServiceClient>(client =>
     {
         client.BaseAddress =
-            new Uri("https://localhost:7230/");
+            new Uri("http://localhost:5286/");
     });
 
 builder.Services.AddMediatR(cfg =>
