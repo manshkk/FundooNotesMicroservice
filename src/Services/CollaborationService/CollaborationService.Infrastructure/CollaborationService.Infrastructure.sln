@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11822.322 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollaborationService.Infrastructure", "CollaborationService.Infrastructure.csproj", "{81FD050F-2E1C-2972-C1F2-AF8A33B247D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81FD050F-2E1C-2972-C1F2-AF8A33B247D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81FD050F-2E1C-2972-C1F2-AF8A33B247D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81FD050F-2E1C-2972-C1F2-AF8A33B247D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81FD050F-2E1C-2972-C1F2-AF8A33B247D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2EA927CA-77CF-4922-8486-75BF0C85C99A}
+	EndGlobalSection
+EndGlobal

@@ -16,4 +16,8 @@
 		<ProjectReference Include="..\CollaborationService.Infrastructure\CollaborationService.Infrastructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Controllers\" />
+	</ItemGroup>
+
 </Project>
