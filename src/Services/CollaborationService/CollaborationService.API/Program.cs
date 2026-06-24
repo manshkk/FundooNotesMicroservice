@@ -1,4 +1,26 @@
+using CollaborationService.Application.Interfaces;
+using CollaborationService.Infrastructure.Context;
+using CollaborationService.Infrastructure.Repositories;
+using CollaborationService.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<CollaborationDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<
+    ICollaboratorRepository,
+    CollaboratorRepository>();
+
+builder.Services.AddHttpClient<
+    IUserServiceClient,
+    UserServiceClient>(client =>
+    {
+        client.BaseAddress =
+            new Uri("https://localhost:5001/");
+    });
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
