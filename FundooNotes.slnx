@@ -23,6 +23,7 @@
     <Project Path="src/ApiGateway/OcelotGateway/OcelotGateway.csproj" />
   </Folder>
   <Folder Name="/src/SharedLibrary/">
+    <Project Path="src/SharedLibrary/SharedLibrary.Caching/SharedLibrary.Caching.csproj" Id="39312e83-9997-4a87-b946-3d931579fdd8" />
     <Project Path="src/SharedLibrary/SharedLibrary.Exceptions/SharedLibrary.Exceptions.csproj" />
   </Folder>
 </Solution>
