@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace SharedLibrary.Messaging.Interfaces;
 
-namespace SharedLibrary.Messaging.Interfaces
+public interface IMessagePublisher
 {
-    internal class IMessagePublisher
-    {
-    }
+    Task PublishAsync<T>(
+        string queueName,
+        T message,
+        CancellationToken cancellationToken = default);
 }
