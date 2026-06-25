@@ -1,4 +1,6 @@
-﻿public static class CacheKeys
+﻿namespace SharedLibrary.Caching.Constants;
+
+public static class CacheKeys
 {
     public static string UserNotes(int userId)
         => $"notes:user:{userId}";
