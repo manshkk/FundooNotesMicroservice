@@ -16,7 +16,7 @@ public class RabbitMqPublisher : IMessagePublisher
         _settings = options.Value;
     }
 
-    public async Task PublishAsync<T>(
+    public Task PublishAsync<T>(
         string queueName,
         T message,
         CancellationToken cancellationToken = default)
@@ -29,25 +29,24 @@ public class RabbitMqPublisher : IMessagePublisher
             Password = _settings.Password
         };
 
-        await using var connection = await factory.CreateConnectionAsync(cancellationToken);
+        using var connection = factory.CreateConnection();
+        using var channel = connection.CreateModel();
 
-        await using var channel = await connection.CreateChannelAsync(cancellationToken: cancellationToken);
-
-        await channel.QueueDeclareAsync(
+        channel.QueueDeclare(
             queue: queueName,
             durable: true,
             exclusive: false,
             autoDelete: false,
-            arguments: null,
-            cancellationToken: cancellationToken);
+            arguments: null);
 
         var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
-        await channel.BasicPublishAsync(
-            exchange: string.Empty,
+        channel.BasicPublish(
+            exchange: "",
             routingKey: queueName,
-            mandatory: false,
-            body: body,
-            cancellationToken: cancellationToken);
+            basicProperties: null,
+            body: body);
+
+        return Task.CompletedTask;
     }
 }
