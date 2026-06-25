@@ -25,5 +25,6 @@
   <Folder Name="/src/SharedLibrary/">
     <Project Path="src/SharedLibrary/SharedLibrary.Caching/SharedLibrary.Caching.csproj" Id="39312e83-9997-4a87-b946-3d931579fdd8" />
     <Project Path="src/SharedLibrary/SharedLibrary.Exceptions/SharedLibrary.Exceptions.csproj" />
+    <Project Path="src/SharedLibrary/SharedLibrary.Messaging/SharedLibrary.Messaging.csproj" />
   </Folder>
 </Solution>
