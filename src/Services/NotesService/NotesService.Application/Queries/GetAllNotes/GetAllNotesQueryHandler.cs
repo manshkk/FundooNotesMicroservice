@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using NotesService.Application.DTOs;
 using NotesService.Application.Interfaces;
+using SharedLibrary.Caching.Constants;
 using SharedLibrary.Caching.Interfaces;
 
 namespace NotesService.Application.Queries.GetAllNotes;
@@ -23,7 +24,7 @@ public class GetAllNotesQueryHandler
     GetAllNotesQuery request,
     CancellationToken cancellationToken)
     {
-        var cacheKey = $"notes:user:{request.UserId}";
+        var cacheKey = CacheKeys.UserNotes(request.UserId);
 
         // 1. Check Redis
         var cachedNotes = await _cacheService

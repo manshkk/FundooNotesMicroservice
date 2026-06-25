@@ -43,7 +43,7 @@ public class UpdateNoteCommandHandler
             CacheKeys.UserNotes(request.UserId));
 
         await _cacheService.RemoveDataAsync(
-            CacheKeys.NoteById(request.Id));
+            CacheKeys.NoteById(request.UserId, request.Id));
 
         return true;
     }

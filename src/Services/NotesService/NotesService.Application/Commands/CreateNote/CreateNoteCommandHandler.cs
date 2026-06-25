@@ -36,6 +36,8 @@ public class CreateNoteCommandHandler : IRequestHandler<CreateNoteCommand, int>
 
         await _cacheService.RemoveDataAsync(
             CacheKeys.UserNotes(request.UserId));
+        await _cacheService.RemoveDataAsync(
+             CacheKeys.TrashNotes(request.UserId));
 
         return noteId;
     }

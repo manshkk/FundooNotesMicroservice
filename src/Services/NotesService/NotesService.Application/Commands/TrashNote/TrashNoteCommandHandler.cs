@@ -46,7 +46,7 @@ public class TrashNoteCommandHandler
             CacheKeys.TrashNotes(request.UserId));
 
         await _cacheService.RemoveDataAsync(
-            CacheKeys.NoteById(request.Id));
+            CacheKeys.NoteById(request.UserId, request.Id));
 
         return true;
     }

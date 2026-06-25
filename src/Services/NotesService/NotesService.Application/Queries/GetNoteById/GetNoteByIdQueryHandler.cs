@@ -24,7 +24,7 @@ public class GetNoteByIdQueryHandler
     GetNoteByIdQuery request,
     CancellationToken cancellationToken)
     {
-        var cacheKey = CacheKeys.NoteById(request.Id);
+        var cacheKey = CacheKeys.NoteById(request.UserId, request.Id);
 
         var cachedNote =
             await _cacheService.GetDataAsync<NoteResponseDto>(cacheKey);
