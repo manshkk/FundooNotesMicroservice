@@ -1,16 +1,22 @@
 ﻿using MediatR;
 using NotesService.Application.Interfaces;
 using NotesService.Domain.Entities;
+using SharedLibrary.Caching.Constants;
+using SharedLibrary.Caching.Interfaces;
 
 namespace NotesService.Application.Commands.CreateNote;
 
 public class CreateNoteCommandHandler : IRequestHandler<CreateNoteCommand, int>
 {
     private readonly INoteRepository _noteRepository;
+    private readonly ICacheService _cacheService;
 
-    public CreateNoteCommandHandler(INoteRepository noteRepository)
+    public CreateNoteCommandHandler(
+    INoteRepository noteRepository,
+    ICacheService cacheService)
     {
         _noteRepository = noteRepository;
+        _cacheService = cacheService;
     }
 
     public async Task<int> Handle(
@@ -26,6 +32,11 @@ public class CreateNoteCommandHandler : IRequestHandler<CreateNoteCommand, int>
             UpdatedAt = DateTime.UtcNow
         };
 
-        return await _noteRepository.AddAsync(note);
+        var noteId = await _noteRepository.AddAsync(note);
+
+        await _cacheService.RemoveDataAsync(
+            CacheKeys.UserNotes(request.UserId));
+
+        return noteId;
     }
 }

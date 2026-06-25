@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using NotesService.Application.Interfaces;
+using SharedLibrary.Caching.Constants;
+using SharedLibrary.Caching.Interfaces;
 
 namespace NotesService.Application.Commands.UpdateNote;
 
@@ -7,10 +9,14 @@ public class UpdateNoteCommandHandler
     : IRequestHandler<UpdateNoteCommand, bool>
 {
     private readonly INoteRepository _noteRepository;
+    private readonly ICacheService _cacheService;
 
-    public UpdateNoteCommandHandler(INoteRepository noteRepository)
+    public UpdateNoteCommandHandler(
+    INoteRepository noteRepository,
+    ICacheService cacheService)
     {
         _noteRepository = noteRepository;
+        _cacheService = cacheService;
     }
 
     public async Task<bool> Handle(
@@ -32,6 +38,12 @@ public class UpdateNoteCommandHandler
         note.UpdatedAt = DateTime.UtcNow;
 
         await _noteRepository.UpdateAsync(note);
+
+        await _cacheService.RemoveDataAsync(
+            CacheKeys.UserNotes(request.UserId));
+
+        await _cacheService.RemoveDataAsync(
+            CacheKeys.NoteById(request.Id));
 
         return true;
     }
