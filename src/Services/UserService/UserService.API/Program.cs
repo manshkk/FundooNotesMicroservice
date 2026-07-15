@@ -9,10 +9,24 @@ using UserService.Infrastructure.Authentication;
 using UserService.Infrastructure.Context;
 using UserService.Infrastructure.Email;
 using UserService.Infrastructure.Repositories;
+using SharedLibrary.Messaging.Extensions;
+using UserService.API.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FundooCorsPolicy", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
@@ -51,6 +65,8 @@ builder.Services.AddDbContext<FundooDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddRabbitMqMessaging(builder.Configuration);
+builder.Services.AddHostedService<UserRegisteredConsumer>();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(RegisterUserCommandHandler).Assembly));
 
@@ -85,6 +101,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("FundooCorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

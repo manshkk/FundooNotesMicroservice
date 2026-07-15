@@ -1,20 +1,22 @@
 using MediatR;
 using UserService.Application.Interfaces;
 using UserService.Domain.Entities;
+using SharedLibrary.Messaging.Events;
+using SharedLibrary.Messaging.Interfaces;
 
 namespace UserService.Application.Commands.RegisterUser;
 
 public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, int>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IEmailService _emailService;
+    private readonly IMessagePublisher _messagePublisher;
 
     public RegisterUserCommandHandler(
-        IUserRepository userRepository,
-        IEmailService emailService)
+    IUserRepository userRepository,
+    IMessagePublisher messagePublisher)
     {
         _userRepository = userRepository;
-        _emailService = emailService;
+        _messagePublisher = messagePublisher;
     }
 
     public async Task<int> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -37,7 +39,16 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, i
 
         var userId = await _userRepository.AddAsync(user);
 
-        await _emailService.SendWelcomeEmailAsync(user.Email, user.FirstName);
+        await _messagePublisher.PublishAsync(
+    "fundoonotes.user.registered",
+    new UserRegisteredEvent
+    {
+        UserId = userId,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        Email = user.Email
+    },
+    cancellationToken);
 
         return userId;
     }

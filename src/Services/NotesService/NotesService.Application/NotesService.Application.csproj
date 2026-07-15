@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NotesService.Domain\NotesService.Domain.csproj" />
+	  <ProjectReference Include="..\..\..\SharedLibrary\SharedLibrary.Caching\SharedLibrary.Caching.csproj" />
   </ItemGroup>
 
   <ItemGroup>
